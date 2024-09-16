@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOAS</title>
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <!-- Link to the Particle.js library -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         body {
             margin: 0;
-            overflow: hidden; /* Prevent scrolling due to particles */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #222; /* Background color */
+            /* Background with a random Unsplash image */
+            background-image: url('https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?q=80&w=3936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
             position: relative;
+            font-family: 'Roboto', sans-serif; /* Use the new font */
         }
         #particles-js {
             position: absolute;
@@ -30,15 +36,13 @@
             position: relative;
         }
         .logo {
-            width: 200px; /* Adjust size of logo */
-            height: 200px; /* Adjust size of logo */
-            margin: 0 auto; /* Center the logo horizontally */
-            /* Add any specific styles for your logo */
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
         }
         .text {
-            color: #fff; /* Text color */
-            font-size: 24px; /* Font size */
-            /* Center align text */
+            color: #fff;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -60,7 +64,7 @@
     </div>
 
     <!-- Particles.js configuration -->
-<script>
+    <script>
         particlesJS('particles-js', {
             "particles": {
                 "number": {
@@ -81,32 +85,14 @@
                     },
                     "polygon": {
                         "nb_sides": 5
-                    },
-                    "image": {
-                        "src": "https://svgshare.com/getbyhash/sha1-FnriIbuU6c3TVaGZxzLPVcETsIU=",
-                        "width": 100,
-                        "height": 100
                     }
                 },
                 "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
+                    "value": 0.5
                 },
                 "size": {
                     "value": 5,
-                    "random": true,
-                    "anim": {
-                        "enable": true,
-                        "speed": 10,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
+                    "random": true
                 },
                 "line_linked": {
                     "enable": true,
@@ -117,56 +103,7 @@
                 },
                 "move": {
                     "enable": true,
-                    "speed": 3,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": false,
-                        "mode": "repulse"
-                    },
-                    "onclick": {
-                        "enable": false,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 400,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
+                    "speed": 3
                 }
             },
             "retina_detect": true
