@@ -1,113 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOAS</title>
-    <!-- Link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <!-- Link to the Particle.js library -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            /* Background with a random Unsplash image */
-            background-image: url('https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?q=80&w=3936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            font-family: 'Roboto', sans-serif; /* Use the new font */
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-        .content {
-            text-align: center;
-            z-index: 1;
-            position: relative;
-        }
-        .logo {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-        }
-        .text {
-            color: #fff;
-            font-size: 24px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>CodePen - Matrix digital rain (animated version)</title>
+  <link rel="stylesheet" href="./style.css">
+
 </head>
 <body>
-    <!-- Particles.js container -->
-    <div id="particles-js"></div>
+<!-- partial:index.partial.html -->
+<main></main>
+<!-- partial -->
+  <script  src="./script.js"></script>
 
-    <!-- Content -->
-    <div class="content">
-        <!-- Logo -->
-        <div class="logo">
-            <img src="https://i.imgur.com/GbqHQFj.png" alt="Logo">
-        </div>
-
-        <!-- Text -->
-        <div class="text">
-            <p>MOAS</p>
-        </div>
-    </div>
-
-    <!-- Particles.js configuration -->
-    <script>
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 20,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#9ae5ff"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 2,
-                        "color": "#ffffff"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
-                    }
-                },
-                "opacity": {
-                    "value": 0.5
-                },
-                "size": {
-                    "value": 5,
-                    "random": true
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 250,
-                    "color": "#ffffff",
-                    "opacity": 0.4,
-                    "width": 3.5
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 3
-                }
-            },
-            "retina_detect": true
-        });
-    </script>
 </body>
 </html>
