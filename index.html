@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>moas.design</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@300;400&family=Slackey&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Space Mono", monospace;
+                background: linear-gradient(
+                    135deg,
+                    #091833 0%,
+                    #133e7c 35%,
+                    #711c91 70%,
+                    #ea00d9 100%
+                );
+                min-height: 100vh;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #particles-canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+            }
+
+            .hero-container {
+                position: relative;
+                z-index: 2;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto 2rem;
+                display: block;
+                opacity: 0;
+                animation: logoSpinUp 1.5s
+                    cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards;
+                filter: drop-shadow(0 0 20px rgba(10, 189, 198, 0.6));
+                cursor: pointer;
+                transition: transform 0.2s ease;
+            }
+
+            .logo:hover {
+                transform: scale(1.1) rotate(720deg);
+            }
+
+            .logo:active {
+                transform: scale(0.95) rotate(720deg);
+            }
+
+            .confetti {
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                pointer-events: none;
+                z-index: 1000;
+            }
+
+            @keyframes logoSpinUp {
+                0% {
+                    opacity: 0;
+                    transform: translateY(500px) rotate(0deg) scale(0.5);
+                }
+                60% {
+                    opacity: 1;
+                    transform: translateY(-20px) rotate(720deg) scale(1.1);
+                }
+                80% {
+                    transform: translateY(10px) rotate(720deg) scale(0.95);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) rotate(720deg) scale(1);
+                }
+            }
+
+            .main-text {
+                font-family: "Slackey", cursive;
+                font-size: 5rem;
+                font-weight: normal;
+                color: #0abdc6;
+                text-shadow:
+                    0 0 20px rgba(10, 189, 198, 0.8),
+                    0 0 40px rgba(234, 0, 217, 0.4);
+                margin-bottom: 1rem;
+                display: inline-block;
+                letter-spacing: 0.15em;
+            }
+
+            .main-text span {
+                display: inline-block;
+                opacity: 0;
+                animation: bounceDown 0.6s
+                    cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            .main-text span.float {
+                animation:
+                    bounceDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+                        forwards,
+                    floatLetter 2s ease-in-out infinite;
+            }
+
+            .subtitle {
+                font-family: "Slackey", cursive;
+                font-size: 2rem;
+                color: #ea00d9;
+                font-weight: normal;
+                letter-spacing: 0.4rem;
+                text-shadow: 0 0 15px rgba(234, 0, 217, 0.8);
+                margin-bottom: 2rem;
+            }
+
+            .subtitle span {
+                display: inline-block;
+                opacity: 0;
+                animation: bounceDown 0.6s
+                    cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            .description {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 1.3rem;
+                color: #ffffff;
+                max-width: 1000px;
+                margin: 0 auto;
+                line-height: 2.8;
+                font-weight: 400;
+                letter-spacing: 0.1em;
+            }
+
+            .description span {
+                display: inline-block;
+                opacity: 0;
+                animation: matrixDrop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+                    forwards;
+            }
+
+            @keyframes bounceDown {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-300px);
+                }
+                60% {
+                    opacity: 1;
+                    transform: translateY(20px);
+                }
+                80% {
+                    transform: translateY(-10px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes floatLetter {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-15px);
+                }
+            }
+
+            @keyframes matrixDrop {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-500px) rotateX(0deg) rotateY(0deg);
+                    color: #0abdc6;
+                    text-shadow: 0 0 10px rgba(10, 189, 198, 0.8);
+                }
+                70% {
+                    color: #ea00d9;
+                    text-shadow: 0 0 10px rgba(234, 0, 217, 0.8);
+                    transform: translateY(-50px) rotateX(720deg) rotateY(360deg);
+                }
+                85% {
+                    color: #ea00d9;
+                    text-shadow: 0 0 8px rgba(234, 0, 217, 0.7);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+                    color: #ffffff;
+                    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .main-text {
+                    font-size: 3rem;
+                }
+                .subtitle {
+                    font-size: 1.2rem;
+                    letter-spacing: 0.2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="particles-canvas"></canvas>
+
+        <div class="hero-container">
+            <img
+                src="https://i.ibb.co/Pzgk39zb/4ksl8aJ.png"
+                alt="klick me for love"
+                class="logo"
+            />
+            <h1 class="main-text" id="main-text"></h1>
+            <p class="subtitle" id="subtitle"></p>
+            <p class="description" id="description"></p>
+        </div>
+
+        <script>
+            // Split main text into individual letters
+            const mainText = document.getElementById("main-text");
+            const text = "moas.design";
+
+            text.split("").forEach((char, index) => {
+                const span = document.createElement("span");
+                span.textContent = char;
+                span.style.animationDelay = `${index * 0.05}s`;
+                mainText.appendChild(span);
+
+                // Add float animation after bounce completes
+                setTimeout(
+                    () => {
+                        span.classList.add("float");
+                        span.style.animationDelay = `${index * 0.1}s`;
+                    },
+                    600 + index * 50,
+                );
+            });
+
+            // Split subtitle into individual letters
+            const subtitle = document.getElementById("subtitle");
+            const subtitleText = "geek # event-tech # web-dev";
+            const subtitleDelay = text.length * 0.05 + 0.2;
+
+            subtitleText.split("").forEach((char, index) => {
+                const span = document.createElement("span");
+                span.textContent = char;
+                span.style.animationDelay = `${subtitleDelay + index * 0.03}s`;
+                subtitle.appendChild(span);
+            });
+
+            // Split description into individual letters for Matrix effect
+            const description = document.getElementById("description");
+            const descText =
+                "Forging digital experiences, through code and creativity.\nBuilding the future, one pixel at a time.\nWhere innovation meets imagination.\nCrafting tomorrow's technology, today.";
+            const descDelay = subtitleDelay + subtitleText.length * 0.03 + 0.8;
+
+            descText.split("").forEach((char, index) => {
+                if (char === "\n") {
+                    description.appendChild(document.createElement("br"));
+                } else if (char === " ") {
+                    // Create a space span to preserve word spacing
+                    const space = document.createElement("span");
+                    space.innerHTML = "&nbsp;"; // Single space for normal spacing
+                    space.style.display = "inline-block";
+                    const randomDelay = descDelay + Math.random() * 3;
+                    space.style.animationDelay = `${randomDelay}s`;
+                    description.appendChild(space);
+                } else {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    const randomDelay = descDelay + Math.random() * 3;
+                    span.style.animationDelay = `${randomDelay}s`;
+                    description.appendChild(span);
+                }
+            });
+
+            // Particle System
+            const canvas = document.getElementById("particles-canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.z = Math.random() * 1000;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.speedZ = (Math.random() - 0.5) * 2;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.z += this.speedZ;
+
+                    // 3D effect
+                    const scale = 1000 / (1000 + this.z);
+                    this.screenX =
+                        (this.x - canvas.width / 2) * scale + canvas.width / 2;
+                    this.screenY =
+                        (this.y - canvas.height / 2) * scale +
+                        canvas.height / 2;
+                    this.screenSize = this.size * scale;
+
+                    // Wrap around edges
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.z > 1000) this.z = 0;
+                    if (this.z < 0) this.z = 1000;
+                }
+
+                draw() {
+                    ctx.fillStyle = `rgba(10, 189, 198, ${this.opacity * (1 - this.z / 1000)})`;
+                    ctx.beginPath();
+                    ctx.arc(
+                        this.screenX,
+                        this.screenY,
+                        this.screenSize,
+                        0,
+                        Math.PI * 2,
+                    );
+                    ctx.fill();
+
+                    // Add glow effect for larger particles
+                    if (this.screenSize > 1.5) {
+                        ctx.fillStyle = `rgba(234, 0, 217, ${this.opacity * 0.3 * (1 - this.z / 1000)})`;
+                        ctx.beginPath();
+                        ctx.arc(
+                            this.screenX,
+                            this.screenY,
+                            this.screenSize * 2,
+                            0,
+                            Math.PI * 2,
+                        );
+                        ctx.fill();
+                    }
+                }
+            }
+
+            const particles = [];
+            const particleCount = 150;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function connectParticles() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].screenX - particles[j].screenX;
+                        const dy = particles[i].screenY - particles[j].screenY;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 120) {
+                            ctx.strokeStyle = `rgba(113, 28, 145, ${0.2 * (1 - distance / 120)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(
+                                particles[i].screenX,
+                                particles[i].screenY,
+                            );
+                            ctx.lineTo(
+                                particles[j].screenX,
+                                particles[j].screenY,
+                            );
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach((particle) => {
+                    particle.update();
+                    particle.draw();
+                });
+
+                connectParticles();
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener("resize", () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            // Mouse interaction
+            canvas.addEventListener("mousemove", (e) => {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                particles.forEach((particle) => {
+                    const dx = mouseX - particle.screenX;
+                    const dy = mouseY - particle.screenY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        const force = (100 - distance) / 100;
+                        particle.x -= dx * force * 0.05;
+                        particle.y -= dy * force * 0.05;
+                    }
+                });
+            });
+
+            // Confetti effect on logo click
+            const logo = document.querySelector(".logo");
+            const confettiColors = ["#711c91", "#ea00d9", "#0abdc6", "#133e7c"];
+
+            logo.addEventListener("click", (e) => {
+                const rect = logo.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                // Create 50 confetti pieces
+                for (let i = 0; i < 50; i++) {
+                    createConfetti(centerX, centerY);
+                }
+            });
+
+            function createConfetti(x, y) {
+                const confetti = document.createElement("div");
+                confetti.className = "confetti";
+
+                // Random color from palette
+                const color =
+                    confettiColors[
+                        Math.floor(Math.random() * confettiColors.length)
+                    ];
+                confetti.style.backgroundColor = color;
+                confetti.style.boxShadow = `0 0 10px ${color}`;
+
+                // Random shape (square or circle)
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = "50%";
+                }
+
+                // Starting position
+                confetti.style.left = x + "px";
+                confetti.style.top = y + "px";
+
+                document.body.appendChild(confetti);
+
+                // Random velocity
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 3 + Math.random() * 5;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity - 5; // Initial upward boost
+
+                let posX = x;
+                let posY = y;
+                let velocityX = vx;
+                let velocityY = vy;
+                let rotation = Math.random() * 360;
+                let opacity = 1;
+
+                function animateConfetti() {
+                    velocityY += 0.2; // Gravity
+                    posX += velocityX;
+                    posY += velocityY;
+                    rotation += 5;
+                    opacity -= 0.015;
+
+                    confetti.style.left = posX + "px";
+                    confetti.style.top = posY + "px";
+                    confetti.style.transform = `rotate(${rotation}deg)`;
+                    confetti.style.opacity = opacity;
+
+                    if (opacity > 0 && posY < window.innerHeight) {
+                        requestAnimationFrame(animateConfetti);
+                    } else {
+                        confetti.remove();
+                    }
+                }
+
+                animateConfetti();
+            }
+        </script>
+    </body>
+</html>
