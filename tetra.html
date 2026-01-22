@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetra Intermodulation Calculator</title>
+    <style>
+        :root {
+            /* Light theme variables */
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --background: #f5f5f5;
+            --card-bg: white;
+            --text-color: #2c3e50;
+            --border-color: #ddd;
+            --light-bg: #ecf0f1;
+            --highlight-bg: #ffe6e6;
+        }
+        
+        [data-theme="dark"] {
+            /* Dark theme variables */
+            --primary: #1a2530;
+            --secondary: #2980b9;
+            --accent: #c0392b;
+            --background: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ecf0f1;
+            --border-color: #444;
+            --light-bg: #2c3e50;
+            --highlight-bg: #6d3030;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .theme-toggle label {
+            margin-right: 10px;
+            color: white;
+        }
+        
+        h1 {
+            margin: 0;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .input-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 10px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            filter: brightness(1.1);
+        }
+        
+        button.danger {
+            background-color: var(--accent);
+        }
+        
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .toggle-switch label {
+            margin-right: 10px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--secondary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .results-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .results-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .results-card h3 {
+            margin-top: 0;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        ul {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .highlighted {
+            background-color: var(--highlight-bg);
+            font-weight: bold;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .info-section {
+            margin-top: 20px;
+        }
+        
+        .frequency-list {
+            background-color: var(--light-bg);
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .frequency-item {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .input-section {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .results-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                position: static;
+                justify-content: center;
+                margin-top: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .sun-moon {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tetra Intermodulation Calculator</h1>
+            <p>Calculate IM3 and IM5 intermodulation products for up to 10 frequencies</p>
+            
+            <div class="theme-toggle">
+                <label for="darkModeToggle">
+                    <span id="themeIcon">☀️</span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </header>
+        
+        <div class="card">
+            <h2>Enter Frequencies (MHz)</h2>
+            <p>Enter up to 10 frequencies to calculate potential intermodulation interference.</p>
+            
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="freq1">Frequency 1</label>
+                    <input type="number" id="freq1" step="0.0001" placeholder="e.g. 390.0125">
+                </div>
+                <div class="input-group">
+                    <label for="freq2">Frequency 2</label>
+                    <input type="number" id="freq2" step="0.0001" placeholder="e.g. 395.0125">
+                </div>
+                <div class="input-group">
+                    <label for="freq3">Frequency 3</label>
+                    <input type="number" id="freq3" step="0.0001" placeholder="e.g. 400.0125">
+                </div>
+                <div class="input-group">
+                    <label for="freq4">Frequency 4</label>
+                    <input type="number" id="freq4" step="0.0001" placeholder="Optional">
+                </div>
+                <div class="input-group">
+                    <label for="freq5">Frequency 5</label>
+                    <input type="number" id="freq5" step="0.0001" placeholder="Optional">
+                </div>
+                <div class="input-group">
+                    <label for="freq6">Frequency 6</label>
+                    <input type="number" id="freq6" step="0.0001" placeholder="Optional">
+                </div>
+                <div class="input-group">
+                    <label for="freq7">Frequency 7</label>
+                    <input type="number" id="freq7" step="0.0001" placeholder="Optional">
+                </div>
+                <div class="input-group">
+                    <label for="freq8">Frequency 8</label>
+                    <input type="number" id="freq8" step="0.0001" placeholder="Optional">
+                </div>
+                <div class="input-group">
+                    <label for="freq9">Frequency 9</label>
+                    <input type="number" id="freq9" step="0.0001" placeholder="Optional">
+                </div>
+                <div class="input-group">
+                    <label for="freq10">Frequency 10</label>
+                    <input type="number" id="freq10" step="0.0001" placeholder="Optional">
+                </div>
+            </div>
+            
+            <div class="toggle-switch">
+                <label for="showOnlyMatching">Only show intermodulation products that match input frequencies:</label>
+                <label class="switch">
+                    <input type="checkbox" id="showOnlyMatching" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="calculateIM()">Calculate Intermodulation</button>
+                <button class="danger" onclick="clearInputs()">Clear All</button>
+            </div>
+        </div>
+        
+        <div id="resultsContainer" style="display: none;">
+            <div class="card">
+                <h2>Calculation Results</h2>
+                <div id="frequencyListContainer" class="frequency-list">
+                    <strong>Frequencies used: </strong>
+                    <span id="frequencyList"></span>
+                </div>
+                
+                <div class="results-section">
+                    <div class="results-card">
+                        <h3>3rd Order Intermodulation (IM3)</h3>
+                        <p>Formula: 2f₁ - f₂ and 2f₂ - f₁</p>
+                        <ul id="im3Results">
+                            <!-- Results will be populated here -->
+                        </ul>
+                    </div>
+                    
+                    <div class="results-card">
+                        <h3>5th Order Intermodulation (IM5)</h3>
+                        <p>Formula: 3f₁ - 2f₂ and 3f₂ - 2f₁</p>
+                        <ul id="im5Results">
+                            <!-- Results will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card info-section">
+                <h2>About Intermodulation in TETRA Systems</h2>
+                <p>Intermodulation (IM) products occur when two or more frequencies mix within a non-linear device such as a transmitter amplifier. These unwanted signals can cause interference to other receivers.</p>
+                <ul>
+                    <li><strong>3rd Order (IM3):</strong> Typically the strongest and most problematic type of intermodulation interference. These products follow the formula 2f₁ - f₂ or 2f₂ - f₁.</li>
+                    <li><strong>5th Order (IM5):</strong> Weaker than IM3 but still significant in dense frequency environments. These follow the formula 3f₁ - 2f₂ or 3f₂ - 2f₁.</li>
+                </ul>
+                <p>When planning a TETRA system, it's important to consider these potential intermodulation products to ensure proper frequency spacing and avoid interference issues.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        // Check for saved theme preference or use preferred color scheme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set initial theme
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeToggle.checked = true;
+            themeIcon.textContent = '🌙';
+        }
+        
+        // Toggle theme when switch is clicked
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '☀️';
+            }
+        });
+        
+        function calculateIM() {
+            let frequencies = [];
+            for (let i = 1; i <= 10; i++) {
+                let val = document.getElementById('freq' + i).value;
+                if (val) frequencies.push(parseFloat(val));
+            }
+            
+            // At least 2 frequencies needed to calculate intermodulation
+            if (frequencies.length < 2) {
+                alert("Please enter at least 2 frequencies to calculate intermodulation products.");
+                return;
+            }
+            
+            // Get the setting from the toggle
+            const showOnlyMatching = document.getElementById('showOnlyMatching').checked;
+            
+            let im3Results = [];
+            let im5Results = [];
+            
+            // Calculate all intermodulation products
+            for (let i = 0; i < frequencies.length; i++) {
+                for (let j = 0; j < frequencies.length; j++) {
+                    if (i !== j) {
+                        let f1 = frequencies[i];
+                        let f2 = frequencies[j];
+                        
+                        // Calculate IM3 products (2f₁ - f₂ and 2f₂ - f₁)
+                        const im3a = (2 * f1 - f2).toFixed(4);
+                        const im3b = (2 * f2 - f1).toFixed(4);
+                        
+                        // Calculate IM5 products (3f₁ - 2f₂ and 3f₂ - 2f₁)
+                        const im5a = (3 * f1 - 2 * f2).toFixed(4);
+                        const im5b = (3 * f2 - 2 * f1).toFixed(4);
+                        
+                        // Check if im3a is within the set of input frequencies
+                        const im3aMatch = frequencies.some(f => {
+                            return Math.abs(f - parseFloat(im3a)) < 0.0001;
+                        });
+                        
+                        // Check if im3b is within the set of input frequencies
+                        const im3bMatch = frequencies.some(f => {
+                            return Math.abs(f - parseFloat(im3b)) < 0.0001;
+                        });
+                        
+                        // Check if im5a is within the set of input frequencies
+                        const im5aMatch = frequencies.some(f => {
+                            return Math.abs(f - parseFloat(im5a)) < 0.0001;
+                        });
+                        
+                        // Check if im5b is within the set of input frequencies
+                        const im5bMatch = frequencies.some(f => {
+                            return Math.abs(f - parseFloat(im5b)) < 0.0001;
+                        });
+                        
+                        // If we're showing only matching, add only if matches
+                        // If not, add all
+                        if (!showOnlyMatching || im3aMatch) {
+                            im3Results.push({
+                                frequency: im3a,
+                                matches: im3aMatch,
+                                formula: `2(${f1.toFixed(4)}) - ${f2.toFixed(4)}`
+                            });
+                        }
+                        
+                        if (!showOnlyMatching || im3bMatch) {
+                            im3Results.push({
+                                frequency: im3b,
+                                matches: im3bMatch,
+                                formula: `2(${f2.toFixed(4)}) - ${f1.toFixed(4)}`
+                            });
+                        }
+                        
+                        if (!showOnlyMatching || im5aMatch) {
+                            im5Results.push({
+                                frequency: im5a,
+                                matches: im5aMatch,
+                                formula: `3(${f1.toFixed(4)}) - 2(${f2.toFixed(4)})`
+                            });
+                        }
+                        
+                        if (!showOnlyMatching || im5bMatch) {
+                            im5Results.push({
+                                frequency: im5b,
+                                matches: im5bMatch,
+                                formula: `3(${f2.toFixed(4)}) - 2(${f1.toFixed(4)})`
+                            });
+                        }
+                    }
+                }
+            }
+            
+            // Display the frequencies used
+            document.getElementById('frequencyList').innerHTML = frequencies
+                .map(f => `<span class="frequency-item">${f.toFixed(4)} MHz</span>`)
+                .join('');
+            
+            // Remove duplicates and sort IM3 results
+            let uniqueIM3 = [];
+            let seenIM3 = new Set();
+            for (let item of im3Results) {
+                if (!seenIM3.has(item.frequency)) {
+                    seenIM3.add(item.frequency);
+                    uniqueIM3.push(item);
+                }
+            }
+            uniqueIM3.sort((a, b) => parseFloat(a.frequency) - parseFloat(b.frequency));
+            
+            // Remove duplicates and sort IM5 results
+            let uniqueIM5 = [];
+            let seenIM5 = new Set();
+            for (let item of im5Results) {
+                if (!seenIM5.has(item.frequency)) {
+                    seenIM5.add(item.frequency);
+                    uniqueIM5.push(item);
+                }
+            }
+            uniqueIM5.sort((a, b) => parseFloat(a.frequency) - parseFloat(b.frequency));
+            
+            // Display IM3 results
+            document.getElementById('im3Results').innerHTML = uniqueIM3
+                .map(item => {
+                    if (item.matches) {
+                        return `<li class="highlighted">${item.frequency} MHz - ${item.formula}</li>`;
+                    } else {
+                        return `<li>${item.frequency} MHz - ${item.formula}</li>`;
+                    }
+                })
+                .join('');
+            
+            // Display IM5 results
+            document.getElementById('im5Results').innerHTML = uniqueIM5
+                .map(item => {
+                    if (item.matches) {
+                        return `<li class="highlighted">${item.frequency} MHz - ${item.formula}</li>`;
+                    } else {
+                        return `<li>${item.frequency} MHz - ${item.formula}</li>`;
+                    }
+                })
+                .join('');
+            
+            // Show results container
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+        
+        function clearInputs() {
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById('freq' + i).value = '';
+            }
+            document.getElementById('resultsContainer').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
