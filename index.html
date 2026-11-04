@@ -3,75 +3,117 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>moas.design</title>
+        <title>MOAS.DESIGN</title>
+        <meta
+            name="description"
+            content="moas.design — geek, event-tech and web-dev. Forging digital experiences through code and creativity."
+        />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@300;400&family=Slackey&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Slackey&display=swap"
             rel="stylesheet"
         />
 
         <style>
+            @font-face {
+                font-family: "Aurebesh AF";
+                src: url("fonts/AurebeshAF-Legends.otf") format("opentype");
+                font-display: swap;
+            }
+
+            :root {
+                --bg: #09090b;
+                --bg-soft: #0e0e11;
+                --border: #1c1c21;
+                --border-strong: #2a2a32;
+                --text: #fafafa;
+                --text-soft: #a1a1aa;
+                --text-dim: #71717a;
+                --accent: #0abdc6;
+                --accent-2: #ea00d9;
+                --radius: 12px;
+                --container: 1080px;
+            }
+
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
 
-            body {
-                font-family: "Space Mono", monospace;
-                background: linear-gradient(
-                    135deg,
-                    #091833 0%,
-                    #133e7c 35%,
-                    #711c91 70%,
-                    #ea00d9 100%
-                );
-                min-height: 100vh;
-                overflow: hidden;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            html {
+                scroll-behavior: smooth;
             }
 
-            #particles-canvas {
+            body {
+                font-family: "Inter", -apple-system, BlinkMacSystemFont,
+                    sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+
+            ::selection {
+                background: rgba(10, 189, 198, 0.3);
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .container {
+                max-width: var(--container);
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+
+            /* ── Nav ─────────────────────────────── */
+            nav {
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
+                right: 0;
+                z-index: 100;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                background: rgba(9, 9, 11, 0.7);
+                border-bottom: 1px solid var(--border);
             }
 
-            .hero-container {
-                position: relative;
-                z-index: 2;
-                text-align: center;
-                padding: 2rem;
+            .nav-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 60px;
             }
 
-            .logo {
-                width: 100px;
-                height: 100px;
-                margin: 0 auto 2rem;
-                display: block;
-                opacity: 0;
-                animation: logoSpinUp 1.5s
-                    cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards;
-                filter: drop-shadow(0 0 20px rgba(10, 189, 198, 0.6));
+            .nav-brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                letter-spacing: -0.01em;
+            }
+
+            .nav-brand img {
+                width: 26px;
+                height: 26px;
+                border-radius: 6px;
                 cursor: pointer;
-                transition: transform 0.2s ease;
+                transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             }
 
-            .logo:hover {
-                transform: scale(1.1) rotate(720deg);
+            .nav-brand:hover img {
+                transform: scale(1.15) rotate(360deg);
             }
 
-            .logo:active {
-                transform: scale(0.95) rotate(720deg);
-            }
-
+            /* Confetti burst (click the nav logo) */
             .confetti {
                 position: fixed;
                 width: 10px;
@@ -80,435 +122,1332 @@
                 z-index: 1000;
             }
 
-            @keyframes logoSpinUp {
-                0% {
-                    opacity: 0;
-                    transform: translateY(500px) rotate(0deg) scale(0.5);
-                }
-                60% {
-                    opacity: 1;
-                    transform: translateY(-20px) rotate(720deg) scale(1.1);
-                }
-                80% {
-                    transform: translateY(10px) rotate(720deg) scale(0.95);
-                }
-                100% {
-                    opacity: 1;
-                    transform: translateY(0) rotate(720deg) scale(1);
-                }
+            .nav-links {
+                display: flex;
+                gap: 28px;
+                font-size: 0.875rem;
+                color: var(--text-soft);
             }
 
-            .main-text {
-                font-family: "Slackey", cursive;
-                font-size: 5rem;
-                font-weight: normal;
-                color: #0abdc6;
-                text-shadow:
-                    0 0 20px rgba(10, 189, 198, 0.8),
-                    0 0 40px rgba(234, 0, 217, 0.4);
-                margin-bottom: 1rem;
-                display: inline-block;
-                letter-spacing: 0.15em;
+            .nav-links a {
+                transition: color 0.2s ease;
             }
 
-            .main-text span {
-                display: inline-block;
-                opacity: 0;
-                animation: bounceDown 0.6s
-                    cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            .nav-links a:hover {
+                color: var(--text);
             }
 
-            .main-text span.float {
-                animation:
-                    bounceDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)
-                        forwards,
-                    floatLetter 2s ease-in-out infinite;
+            /* ── Hero ────────────────────────────── */
+            .hero {
+                position: relative;
+                padding: 160px 0 120px;
+                text-align: center;
+                overflow: hidden;
             }
 
-            .subtitle {
-                font-family: "Slackey", cursive;
-                font-size: 2rem;
-                color: #ea00d9;
-                font-weight: normal;
-                letter-spacing: 0.4rem;
-                text-shadow: 0 0 15px rgba(234, 0, 217, 0.8);
-                margin-bottom: 2rem;
+            /* Subtle radial glow behind hero */
+            .hero::before {
+                content: "";
+                position: absolute;
+                top: -200px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 900px;
+                height: 600px;
+                background: radial-gradient(
+                    ellipse at center,
+                    rgba(10, 189, 198, 0.1) 0%,
+                    rgba(234, 0, 217, 0.05) 40%,
+                    transparent 70%
+                );
+                pointer-events: none;
             }
 
-            .subtitle span {
-                display: inline-block;
-                opacity: 0;
-                animation: bounceDown 0.6s
-                    cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            /* Fine grid backdrop */
+            .hero::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: linear-gradient(
+                        var(--border) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+                background-size: 48px 48px;
+                mask-image: radial-gradient(
+                    ellipse 70% 60% at 50% 40%,
+                    black 20%,
+                    transparent 80%
+                );
+                -webkit-mask-image: radial-gradient(
+                    ellipse 70% 60% at 50% 40%,
+                    black 20%,
+                    transparent 80%
+                );
+                pointer-events: none;
             }
 
-            .description {
+            .hero-badge {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
                 font-family: "JetBrains Mono", monospace;
-                font-size: 1.3rem;
-                color: #ffffff;
-                max-width: 1000px;
-                margin: 0 auto;
-                line-height: 2.8;
-                font-weight: 400;
-                letter-spacing: 0.1em;
+                font-size: 0.75rem;
+                color: var(--text-soft);
+                border: 1px solid var(--border-strong);
+                border-radius: 999px;
+                padding: 6px 14px;
+                margin-bottom: 28px;
+                background: var(--bg-soft);
             }
 
-            .description span {
-                display: inline-block;
-                opacity: 0;
-                animation: matrixDrop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-                    forwards;
+            .hero-badge::before {
+                content: "";
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent);
+                animation: pulse 2.5s ease-in-out infinite;
             }
 
-            @keyframes bounceDown {
-                0% {
-                    opacity: 0;
-                    transform: translateY(-300px);
-                }
-                60% {
-                    opacity: 1;
-                    transform: translateY(20px);
-                }
-                80% {
-                    transform: translateY(-10px);
-                }
-                100% {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            @keyframes floatLetter {
+            @keyframes pulse {
                 0%,
                 100% {
-                    transform: translateY(0px);
+                    opacity: 1;
+                    box-shadow: 0 0 0 0 rgba(10, 189, 198, 0.4);
                 }
                 50% {
-                    transform: translateY(-15px);
+                    opacity: 0.7;
+                    box-shadow: 0 0 0 4px rgba(10, 189, 198, 0);
                 }
             }
 
-            @keyframes matrixDrop {
-                0% {
-                    opacity: 0;
-                    transform: translateY(-500px) rotateX(0deg) rotateY(0deg);
-                    color: #0abdc6;
-                    text-shadow: 0 0 10px rgba(10, 189, 198, 0.8);
-                }
-                70% {
-                    color: #ea00d9;
-                    text-shadow: 0 0 10px rgba(234, 0, 217, 0.8);
-                    transform: translateY(-50px) rotateX(720deg) rotateY(360deg);
-                }
-                85% {
-                    color: #ea00d9;
-                    text-shadow: 0 0 8px rgba(234, 0, 217, 0.7);
-                }
+            .hero h1 {
+                position: relative;
+                font-family: "Slackey", "Comic Sans MS", cursive;
+                font-size: clamp(2.8rem, 8vw, 5rem);
+                font-weight: normal;
+                letter-spacing: 0.1em;
+                line-height: 1.1;
+                max-width: 800px;
+                margin: 0 auto 20px;
+            }
+
+            .hero h1 .gradient {
+                background: linear-gradient(
+                    120deg,
+                    var(--accent) 0%,
+                    #67e8f9 35%,
+                    var(--accent-2) 100%
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            /* Per-char flip-in wrappers (kanji scramble effect) */
+            .hero h1 {
+                perspective: 900px;
+            }
+
+            .hero h1 .k {
+                position: relative;
+                display: inline-block;
+                white-space: pre;
+                text-align: center;
+                will-change: transform;
+            }
+
+            /* Aurebesh flip-in: the back face carries the Aurek glyphs so
+               font-metric differences can never shift the headline layout */
+            .hero h1 .k .k-back {
+                position: absolute;
+                inset: 0;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                font-family: "Aurebesh AF", "Inter", sans-serif;
+                font-size: 1.15em;
+                line-height: 1;
+                white-space: pre;
+            }
+
+            .hero h1 .k.aurebesh .k-front {
+                visibility: hidden;
+            }
+
+            .hero h1 .k.aurebesh .k-back {
+                display: flex;
+            }
+
+            .hero p {
+                position: relative;
+                font-size: 1.1rem;
+                color: var(--text-soft);
+                max-width: 560px;
+                margin: 0 auto 36px;
+            }
+
+            .hero-actions {
+                position: relative;
+                display: flex;
+                gap: 14px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                padding: 10px 20px;
+                border-radius: 8px;
+                border: 1px solid transparent;
+                cursor: pointer;
+                transition:
+                    background 0.2s ease,
+                    border-color 0.2s ease,
+                    transform 0.2s ease;
+            }
+
+            .btn-primary {
+                background: var(--text);
+                color: var(--bg);
+            }
+
+            .btn-primary:hover {
+                background: #e4e4e7;
+                transform: translateY(-1px);
+            }
+
+            .btn-secondary {
+                border-color: var(--border-strong);
+                color: var(--text-soft);
+                background: var(--bg-soft);
+            }
+
+            .btn-secondary:hover {
+                border-color: #3f3f46;
+                color: var(--text);
+            }
+
+            /* ── Sections ────────────────────────── */
+            section {
+                padding: 90px 0;
+            }
+
+            .section-label {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.75rem;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                margin-bottom: 10px;
+            }
+
+            .section-title {
+                font-size: clamp(1.5rem, 3.5vw, 2rem);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                margin-bottom: 16px;
+            }
+
+            .section-desc {
+                color: var(--text-soft);
+                max-width: 620px;
+                margin-bottom: 48px;
+            }
+
+            /* ── About ───────────────────────────── */
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1fr 280px;
+                gap: 56px;
+                align-items: start;
+            }
+
+            .about-body p + p {
+                margin-top: 18px;
+            }
+
+            .about-body p {
+                color: var(--text-soft);
+            }
+
+            .about-body strong {
+                color: var(--text);
+                font-weight: 500;
+            }
+
+            .about-chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 28px;
+            }
+
+            .chip {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.75rem;
+                color: var(--text-soft);
+                border: 1px solid var(--border-strong);
+                background: var(--bg-soft);
+                border-radius: 999px;
+                padding: 6px 14px;
+                transition:
+                    border-color 0.2s ease,
+                    color 0.2s ease;
+            }
+
+            .chip:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            /* Pixel mascot card */
+            .mascot-card {
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                background: var(--bg-soft);
+                padding: 24px;
+                text-align: center;
+            }
+
+            .mascot-card img {
+                width: 140px;
+                image-rendering: pixelated;
+                animation: mascotFloat 4s ease-in-out infinite;
+            }
+
+            @keyframes mascotFloat {
+                0%,
                 100% {
-                    opacity: 1;
-                    transform: translateY(0) rotateX(0deg) rotateY(0deg);
-                    color: #ffffff;
-                    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-8px);
                 }
             }
 
-            @media (max-width: 768px) {
-                .main-text {
-                    font-size: 3rem;
+            .mascot-card p {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.72rem;
+                color: var(--text-dim);
+                margin-top: 12px;
+            }
+
+            /* ── Projects ────────────────────────── */
+            #projects {
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Ambient matrix rain behind the tiles */
+            #matrix-canvas {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                pointer-events: none;
+                opacity: 0.45;
+                /* Fade rain to nothing at the edges — no hard cuts */
+                mask-image: radial-gradient(
+                    ellipse 55% 65% at 50% 50%,
+                    black 30%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+                -webkit-mask-image: radial-gradient(
+                    ellipse 55% 65% at 50% 50%,
+                    black 30%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+            }
+
+            #projects > .container {
+                position: relative;
+                z-index: 1;
+            }
+
+            .projects-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .project-card {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                background: var(--bg-soft);
+                padding: 28px;
+                transition:
+                    border-color 0.25s ease,
+                    transform 0.25s ease,
+                    box-shadow 0.25s ease;
+            }
+
+            .project-card:hover {
+                border-color: var(--border-strong);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            }
+
+            .project-head {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 12px;
+                margin-bottom: 10px;
+            }
+
+            .project-head h3 {
+                font-size: 1.05rem;
+                font-weight: 600;
+                letter-spacing: -0.01em;
+            }
+
+            .project-head .arrow {
+                color: var(--text-dim);
+                transition:
+                    color 0.2s ease,
+                    transform 0.2s ease;
+                flex-shrink: 0;
+            }
+
+            .project-card:hover .arrow {
+                color: var(--text);
+                transform: translate(2px, -2px);
+            }
+
+            .project-card p {
+                color: var(--text-soft);
+                font-size: 0.925rem;
+                flex-grow: 1;
+            }
+
+            .project-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 20px;
+            }
+
+            .project-tags span {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.7rem;
+                color: var(--text-dim);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 3px 9px;
+            }
+
+            /* ── Contact ─────────────────────────── */
+            .contact {
+                border-top: 1px solid var(--border);
+                text-align: center;
+            }
+
+            .contact h2 {
+                font-size: clamp(1.6rem, 4vw, 2.4rem);
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                margin-bottom: 12px;
+            }
+
+            .contact p {
+                color: var(--text-soft);
+                margin-bottom: 36px;
+            }
+
+            .contact-links {
+                display: flex;
+                gap: 14px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .contact-links a {
+                display: inline-flex;
+                align-items: center;
+                gap: 9px;
+                font-size: 0.875rem;
+                color: var(--text-soft);
+                border: 1px solid var(--border-strong);
+                background: var(--bg-soft);
+                border-radius: 8px;
+                padding: 10px 18px;
+                transition:
+                    border-color 0.2s ease,
+                    color 0.2s ease,
+                    transform 0.2s ease;
+            }
+
+            .contact-links a:hover {
+                border-color: var(--accent);
+                color: var(--text);
+                transform: translateY(-1px);
+            }
+
+            .contact-links svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
+            }
+
+            /* ── Footer ──────────────────────────── */
+            footer {
+                border-top: 1px solid var(--border);
+                padding: 28px 0;
+            }
+
+            .footer-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+                font-size: 0.8rem;
+                color: var(--text-dim);
+            }
+
+            /* ── Reveal on scroll ────────────────── */
+            .reveal {
+                opacity: 0;
+                transform: translateY(20px);
+                transition:
+                    opacity 0.6s ease,
+                    transform 0.6s ease;
+            }
+
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* ── Responsive ──────────────────────── */
+            @media (max-width: 800px) {
+                .projects-grid {
+                    grid-template-columns: 1fr;
                 }
-                .subtitle {
-                    font-size: 1.2rem;
-                    letter-spacing: 0.2rem;
+
+                .about-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .mascot-card {
+                    max-width: 260px;
+                    margin: 0 auto;
+                }
+
+                .nav-links {
+                    display: none;
+                }
+
+                .hero {
+                    padding: 130px 0 90px;
+                }
+            }
+
+            /* Large displays (e.g. 2560×1440): more vertical breathing
+               room so sections don't crowd the fold */
+            @media (min-width: 1600px) {
+                section {
+                    padding: 130px 0;
+                }
+
+                #projects {
+                    padding-top: 180px;
+                }
+
+                .hero {
+                    padding: 200px 0 150px;
+                }
+            }
+
+            /* ── Reduced motion ──────────────────── */
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+
+                .reveal {
+                    opacity: 1;
+                    transform: none;
                 }
             }
         </style>
     </head>
     <body>
-        <canvas id="particles-canvas"></canvas>
+        <!-- ═══ Nav ═══ -->
+        <nav>
+            <div class="container nav-inner">
+                <a href="#" class="nav-brand" aria-label="MOAS.DESIGN home">
+                    <img src="logo.svg" alt="moas logo" />
+                </a>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </nav>
 
-        <div class="hero-container">
-            <img
-                src="https://i.ibb.co/Pzgk39zb/4ksl8aJ.png"
-                alt="klick me for love"
-                class="logo"
-            />
-            <h1 class="main-text" id="main-text"></h1>
-            <p class="subtitle" id="subtitle"></p>
-            <p class="description" id="description"></p>
-        </div>
+        <!-- ═══ Hero ═══ -->
+        <header class="hero">
+            <div class="container">
+                <span class="hero-badge">geek · event-tech · tetra-radio · web-dev</span>
+                <h1>
+                    <span class="gradient">MOAS.DESIGN</span>
+                </h1>
+                <p>
+                    Building the future one pixel at a time — where innovation
+                    meets imagination, and tomorrow's technology is crafted
+                    today.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">
+                        View projects
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                        >
+                            <path
+                                d="M3 13L13 3M13 3H6M13 3v7"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">Get in touch</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══ About ═══ -->
+        <section id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="reveal about-body">
+                        <p class="section-label">// about</p>
+                        <h2 class="section-title">i am m0a 🍥</h2>
+                        <div>
+                            <p>
+                                A <strong>geek</strong> at heart with a passion
+                                for <strong>event technology</strong>,
+                                <strong>tetra radio comms</strong> and
+                                <strong>web development</strong>. I live at the
+                                intersection of hackery and design — whether
+                                that's keeping crew comms running over tetra,
+                                wiring up an attendee badge system, or crafting
+                                pixel-perfect web experiences.
+                            </p>
+                            <p>
+                                When I'm not shipping code, you'll find me
+                                exploring the far edges of the internet,
+                                tinkering with gadgets, and hoarding
+                                techno-toys like every good sysadmin should.
+                            </p>
+                        </div>
+                        <div class="about-chips">
+                            <span class="chip">#geek</span>
+                            <span class="chip">#event-tech</span>
+                            <span class="chip">#tetra-radio</span>
+                            <span class="chip">#comms</span>
+                            <span class="chip">#web-dev</span>
+                            <span class="chip">#automation</span>
+                        </div>
+                    </div>
+
+                    <div class="reveal mascot-card">
+                        <img src="hoagie.png" alt="hoagie, the pixel mascot" />
+                        <p>&gt; hoagie says hi_</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ Projects ═══
+             Open-source work maintained on GitHub: AkimoA              -->
+        <section id="projects">
+            <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+            <div class="container">
+                <div class="reveal">
+                    <p class="section-label">// projects</p>
+                    <h2 class="section-title">Things I've built</h2>
+                    <p class="section-desc">
+                        A selection of tools, experiments and event-tech
+                        contraptions — from open-source macOS hacks to utility
+                        web tools.
+                    </p>
+                </div>
+
+                <div class="projects-grid">
+                    <a
+                        href="https://github.com/AkimoA/redpill-2026-metal"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-card reveal"
+                    >
+                        <div class="project-head">
+                            <h3>RedPill 2026 (Metal)</h3>
+                            <span
+                                class="arrow"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M3 13L13 3M13 3H6M13 3v7"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                        </div>
+                        <p>
+                            The classic 3D Matrix digital rain screensaver for
+                            macOS, re-rendered with Metal. A full Swift port of
+                            the OpenGL version — one shared vertex buffer and a
+                            single draw call per frame, custom shaders with
+                            linear fog, and native Retina resolution.
+                        </p>
+                        <div class="project-tags">
+                            <span>swift</span>
+                            <span>metal</span>
+                            <span>shaders</span>
+                            <span>macOS</span>
+                            <span>GPL-3.0</span>
+                        </div>
+                    </a>
+
+                    <a
+                        href="https://github.com/AkimoA/RedPill-2025"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-card reveal"
+                    >
+                        <div class="project-head">
+                            <h3>RedPill-2025</h3>
+                            <span
+                                class="arrow"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M3 13L13 3M13 3H6M13 3v7"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                        </div>
+                        <p>
+                            A macOS Matrix screensaver from the past, kept
+                            alive. Universal binary (Apple Silicon + Intel) with
+                            modern compatibility fixes for Sonoma, Sequoia and
+                            macOS 26 — including a workaround for the infamous
+                            CPU-hungry <code>legacyScreenSaver</code> process.
+                        </p>
+                        <div class="project-tags">
+                            <span>objective-c</span>
+                            <span>opengl</span>
+                            <span>universal-binary</span>
+                            <span>macOS</span>
+                            <span>GPL-3.0</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ Contact ═══ -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="reveal">
+                    <p class="section-label">// contact</p>
+                    <h2>Let's build something.</h2>
+                    <p>
+                        Got a project, an event that needs tech, or just want
+                        to talk shop? Reach out anywhere below.
+                    </p>
+                    <div class="contact-links">
+                        <a
+                            href="https://github.com/AkimoA"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="GitHub"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                                />
+                            </svg>
+                            GitHub
+                        </a>
+                        <a
+                            href="https://bsky.app/profile/moas.design"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="Bluesky"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.949.528-7.42 2.015-2.83 7.105 5.027 5.19 6.722-1.059 6.823-2.979.101 1.92.796 8.169 6.823 2.979 4.59-5.09 1.119-6.577-2.83-7.105 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-1.565-.659-.3-1.664-.622-4.3 1.241C16.046 4.748 13.087 8.687 12 10.8z"
+                                />
+                            </svg>
+                            Bluesky
+                        </a>
+                        <a
+                            href="mailto:evolutionary.angelfish.bwtx@mask.me"
+                            aria-label="Email"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M1.5 4.5h21a.5.5 0 0 1 .5.5v14a1.5 1.5 0 0 1-1.5 1.5h-19A1.5 1.5 0 0 1 1 19V5a.5.5 0 0 1 .5-.5zm1.76 2L12 13.35 20.74 6.5H3.26z"
+                                />
+                            </svg>
+                            Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ Footer ═══ -->
+        <footer>
+            <div class="container footer-inner">
+                <span>© 2026 MOAS.DESIGN</span>
+                <span>&gt; built with 🦖 and too much coffee_</span>
+            </div>
+        </footer>
 
         <script>
-            // Split main text into individual letters
-            const mainText = document.getElementById("main-text");
-            const text = "moas.design";
+            // Reveal-on-scroll: adds .visible gradually, respecting a
+            // small stagger between siblings in the same viewport batch.
+            const revealObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+            );
 
-            text.split("").forEach((char, index) => {
-                const span = document.createElement("span");
-                span.textContent = char;
-                span.style.animationDelay = `${index * 0.05}s`;
-                mainText.appendChild(span);
-
-                // Add float animation after bounce completes
-                setTimeout(
-                    () => {
-                        span.classList.add("float");
-                        span.style.animationDelay = `${index * 0.1}s`;
-                    },
-                    600 + index * 50,
-                );
+            document.querySelectorAll(".reveal").forEach((el) => {
+                revealObserver.observe(el);
             });
 
-            // Split subtitle into individual letters
-            const subtitle = document.getElementById("subtitle");
-            const subtitleText = "geek # event-tech # web-dev";
-            const subtitleDelay = text.length * 0.05 + 0.2;
+            // Hero headline: Aurebesh flip-in, decoding to Latin per char
+            (function () {
+                const heroH1 = document.querySelector(".hero h1");
+                if (!heroH1) return;
 
-            subtitleText.split("").forEach((char, index) => {
-                const span = document.createElement("span");
-                span.textContent = char;
-                span.style.animationDelay = `${subtitleDelay + index * 0.03}s`;
-                subtitle.appendChild(span);
-            });
+                const LEAD_TEXT = "";
+                const GRADIENT_TEXT = "MOAS.DESIGN";
+                // Aurek glyphs for the random "still decrypting" decoy roll
+                const AU_POOL =
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&".split("");
 
-            // Split description into individual letters for Matrix effect
-            const description = document.getElementById("description");
-            const descText =
-                "Forging digital experiences, through code and creativity.\nBuilding the future, one pixel at a time.\nWhere innovation meets imagination.\nCrafting tomorrow's technology, today.";
-            const descDelay = subtitleDelay + subtitleText.length * 0.03 + 0.8;
+                // Rebuild the h1 as per-char boxes, preserving the
+                // .gradient wrapper for the accent phrase. Each char box
+                // has a front face (Latin — keeps the box metrics stable)
+                // and a back face (Aurebesh layer, absolutely positioned
+                // so different font metrics can never shift the layout).
+                heroH1.textContent = "";
+                const gradientSpan = document.createElement("span");
+                gradientSpan.className = "gradient";
 
-            descText.split("").forEach((char, index) => {
-                if (char === "\n") {
-                    description.appendChild(document.createElement("br"));
-                } else if (char === " ") {
-                    // Create a space span to preserve word spacing
-                    const space = document.createElement("span");
-                    space.innerHTML = "&nbsp;"; // Single space for normal spacing
-                    space.style.display = "inline-block";
-                    const randomDelay = descDelay + Math.random() * 3;
-                    space.style.animationDelay = `${randomDelay}s`;
-                    description.appendChild(space);
-                } else {
-                    const span = document.createElement("span");
-                    span.textContent = char;
-                    const randomDelay = descDelay + Math.random() * 3;
-                    span.style.animationDelay = `${randomDelay}s`;
-                    description.appendChild(span);
-                }
-            });
+                const addChars = (text, parent, isGradient) => {
+                    for (const ch of text) {
+                        if (ch === " ") {
+                            parent.appendChild(document.createTextNode(" "));
+                            continue;
+                        }
+                        const box = document.createElement("span");
+                        box.className = "k" + (isGradient ? " gx" : "");
 
-            // Particle System
-            const canvas = document.getElementById("particles-canvas");
-            const ctx = canvas.getContext("2d");
+                        const front = document.createElement("span");
+                        front.className = "k-front";
+                        front.textContent = ch;
 
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+                        const back = document.createElement("span");
+                        back.className = "k-back";
 
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.z = Math.random() * 1000;
-                    this.size = Math.random() * 3 + 1;
-                    this.speedX = (Math.random() - 0.5) * 0.5;
-                    this.speedY = (Math.random() - 0.5) * 0.5;
-                    this.speedZ = (Math.random() - 0.5) * 2;
-                    this.opacity = Math.random() * 0.5 + 0.3;
-                }
-
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    this.z += this.speedZ;
-
-                    // 3D effect
-                    const scale = 1000 / (1000 + this.z);
-                    this.screenX =
-                        (this.x - canvas.width / 2) * scale + canvas.width / 2;
-                    this.screenY =
-                        (this.y - canvas.height / 2) * scale +
-                        canvas.height / 2;
-                    this.screenSize = this.size * scale;
-
-                    // Wrap around edges
-                    if (this.x < 0) this.x = canvas.width;
-                    if (this.x > canvas.width) this.x = 0;
-                    if (this.y < 0) this.y = canvas.height;
-                    if (this.y > canvas.height) this.y = 0;
-                    if (this.z > 1000) this.z = 0;
-                    if (this.z < 0) this.z = 1000;
-                }
-
-                draw() {
-                    ctx.fillStyle = `rgba(10, 189, 198, ${this.opacity * (1 - this.z / 1000)})`;
-                    ctx.beginPath();
-                    ctx.arc(
-                        this.screenX,
-                        this.screenY,
-                        this.screenSize,
-                        0,
-                        Math.PI * 2,
-                    );
-                    ctx.fill();
-
-                    // Add glow effect for larger particles
-                    if (this.screenSize > 1.5) {
-                        ctx.fillStyle = `rgba(234, 0, 217, ${this.opacity * 0.3 * (1 - this.z / 1000)})`;
-                        ctx.beginPath();
-                        ctx.arc(
-                            this.screenX,
-                            this.screenY,
-                            this.screenSize * 2,
-                            0,
-                            Math.PI * 2,
-                        );
-                        ctx.fill();
+                        box.appendChild(front);
+                        box.appendChild(back);
+                        parent.appendChild(box);
                     }
+                };
+
+                addChars(LEAD_TEXT, heroH1, false);
+                addChars(GRADIENT_TEXT, gradientSpan, true);
+                heroH1.appendChild(gradientSpan);
+
+                const boxes = Array.from(heroH1.querySelectorAll(".k"));
+
+                // Don't measure until both fonts are ready — locking widths
+                // measured with a fallback font is what made the headline
+                // jump when the real fonts arrived.
+                const fontsReady = document.fonts
+                    ? Promise.all(
+                          ["400 48px Slackey", '48px "Aurebesh AF"'].map(
+                              (spec) =>
+                                  Promise.race([
+                                      document.fonts.load(spec),
+                                      new Promise((res) =>
+                                          setTimeout(res, 2500),
+                                      ),
+                                  ]),
+                          ),
+                      )
+                    : Promise.resolve();
+                fontsReady.catch(() => {});
+
+                fontsReady.then(() => {
+                    // Lock each char's width so glyph swaps can't reflow
+                    boxes.forEach((box) => {
+                        const w = box
+                            .querySelector(".k-front")
+                            .getBoundingClientRect().width;
+                        box.style.width = Math.ceil(w) + "px";
+                    });
+
+                    // Keep the gradient continuous across the accent chars:
+                    // every gradient face gets the full gradient, shifted
+                    // by its char's offset in the phrase.
+                    const gx = boxes.filter((box) =>
+                        box.classList.contains("gx"),
+                    );
+                    const widthOf = (box) =>
+                        box
+                            .querySelector(".k-front")
+                            .getBoundingClientRect().width;
+                    const gw = gx.reduce((acc, box) => acc + widthOf(box), 0);
+                    let cum = 0;
+                    gx.forEach((box) => {
+                        const faceStyle = {
+                            backgroundImage:
+                                "linear-gradient(120deg, #0abdc6 0%, #67e8f9 35%, #ea00d9 100%)",
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: gw + "px 100%",
+                            backgroundPosition: -cum + "px 0",
+                        };
+                        [".k-front", ".k-back"].forEach((sel) => {
+                            const face = box.querySelector(sel);
+                            Object.assign(face.style, faceStyle);
+                            face.style.webkitBackgroundClip = "text";
+                            face.style.backgroundClip = "text";
+                            face.style.webkitTextFillColor = "transparent";
+                        });
+                        cum += widthOf(box);
+                    });
+
+                    if (
+                        window.matchMedia(
+                            "(prefers-reduced-motion: reduce)",
+                        ).matches
+                    ) {
+                        return; // leave the final text as-is
+                    }
+
+                    // Aurebesh decode: roll a decoy glyph, then the char's
+                    // own Aurek form, then settle into a sharp Latin char.
+                    // All animation effects are cancelled on settle so
+                    // nothing stays blurred or soft. Once every char has
+                    // settled, random letters glitch-flicker now and then.
+                    let settledCount = 0;
+                    let glitchTimer = null;
+
+                    function startGlitches() {
+                        if (glitchTimer) return;
+                        const tick = () => {
+                            const box =
+                                boxes[(Math.random() * boxes.length) | 0];
+                            box.animate(
+                                [
+                                    {
+                                        transform: "none",
+                                        opacity: 1,
+                                        offset: 0,
+                                    },
+                                    {
+                                        transform:
+                                            "translateX(-3px) skewX(-6deg)",
+                                        opacity: 0.45,
+                                        offset: 0.18,
+                                    },
+                                    {
+                                        transform:
+                                            "translateX(3px) skewX(5deg)",
+                                        opacity: 1,
+                                        offset: 0.36,
+                                    },
+                                    {
+                                        transform:
+                                            "translateX(-2px) skewY(1.5deg)",
+                                        opacity: 0.3,
+                                        offset: 0.52,
+                                    },
+                                    {
+                                        transform: "translateX(1px)",
+                                        opacity: 0.9,
+                                        offset: 0.7,
+                                    },
+                                    {
+                                        transform: "none",
+                                        opacity: 1,
+                                        offset: 1,
+                                    },
+                                ],
+                                {
+                                    duration: 260 + Math.random() * 240,
+                                    easing: "linear",
+                                },
+                            );
+                            glitchTimer = setTimeout(
+                                tick,
+                                1200 + Math.random() * 2800,
+                            );
+                        };
+                        glitchTimer = setTimeout(tick, 600);
+                    }
+
+                    boxes.forEach((box, i) => {
+                        const back = box.querySelector(".k-back");
+                        const front = box.querySelector(".k-front");
+                        const final = front.textContent;
+                        const delay = i * 75;
+                        const rolls = 2; // decoy + own glyph
+
+                        box.style.opacity = "0";
+
+                        function run(tick) {
+                            if (tick === rolls) {
+                                // Final settle: Latin glyph, spring ease
+                                box.classList.remove("aurebesh");
+                                const settle = box.animate(
+                                    [
+                                        {
+                                            transform: "rotateX(-70deg)",
+                                            opacity: 0,
+                                            filter: "blur(4px)",
+                                        },
+                                        {
+                                            transform: "rotateX(0deg)",
+                                            opacity: 1,
+                                            filter: "blur(0px)",
+                                        },
+                                    ],
+                                    {
+                                        duration: 640,
+                                        easing:
+                                            "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                                        fill: "forwards",
+                                    },
+                                );
+                                Promise.resolve(settle.finished)
+                                    .then(() => {
+                                        // Strip every animation effect so the
+                                        // finished char is pixel sharp.
+                                        box
+                                            .getAnimations()
+                                            .forEach((a) => a.cancel());
+                                        Object.assign(box.style, {
+                                            opacity: "1",
+                                            transform: "none",
+                                            filter: "none",
+                                            willChange: "auto",
+                                        });
+                                        settledCount++;
+                                        if (
+                                            settledCount === boxes.length
+                                        ) {
+                                            startGlitches();
+                                        }
+                                    })
+                                    .catch(() => {});
+                                return;
+                            }
+
+                            // Rolls live on the absolutely positioned back
+                            // face — baseline differences between Aurebesh
+                            // and Inter can never move the box.
+                            box.classList.add("aurebesh");
+                            back.textContent =
+                                tick === 0
+                                    ? AU_POOL[
+                                          (Math.random() * AU_POOL.length) |
+                                              0
+                                      ]
+                                    : final;
+
+                            const anim = box.animate(
+                                [
+                                    {
+                                        transform: "rotateX(-84deg)",
+                                        opacity: 0,
+                                        filter: "blur(5px)",
+                                    },
+                                    {
+                                        transform: "rotateX(0deg)",
+                                        opacity: 1,
+                                        filter: "blur(0px)",
+                                    },
+                                    {
+                                        transform: "rotateX(84deg)",
+                                        opacity: 0,
+                                        filter: "blur(5px)",
+                                    },
+                                ],
+                                {
+                                    duration: 420 + Math.random() * 180,
+                                    easing: "cubic-bezier(0.45, 0, 0.55, 1)",
+                                    fill: "forwards",
+                                },
+                            );
+                            anim.onfinish = () => run(tick + 1);
+                        }
+
+                        setTimeout(() => run(0), delay);
+                    });
+                });
+            })();
+
+            // Matrix rain behind the project tiles — paused when the
+            // section is off-screen, disabled for reduced motion.
+            (function () {
+                if (
+                    window.matchMedia(
+                        "(prefers-reduced-motion: reduce)",
+                    ).matches
+                ) {
+                    return;
                 }
-            }
 
-            const particles = [];
-            const particleCount = 150;
+                const section = document.getElementById("projects");
+                const canvas = document.getElementById("matrix-canvas");
+                const ctx = canvas.getContext("2d");
 
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+                const GLYPHS =
+                    "アイウエオカキクケコサシスセソナニヌネノ0123456789MOASDESIGN<>/|=+*".split(
+                        "",
+                    );
+                const FONT = 14;
+                const FRAME_MS = 80; // slow, ambient crawl
 
-            function connectParticles() {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].screenX - particles[j].screenX;
-                        const dy = particles[i].screenY - particles[j].screenY;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
+                let rows = [];
+                let speeds = [];
+                let running = false;
+                let rafId = null;
+                let last = 0;
 
-                        if (distance < 120) {
-                            ctx.strokeStyle = `rgba(113, 28, 145, ${0.2 * (1 - distance / 120)})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.beginPath();
-                            ctx.moveTo(
-                                particles[i].screenX,
-                                particles[i].screenY,
+                function resize() {
+                    canvas.width = section.offsetWidth;
+                    canvas.height = section.offsetHeight;
+                    const cols = Math.ceil(canvas.width / FONT);
+
+                    // Stagger starting heights + varied speeds per column
+                    rows = Array.from(
+                        { length: cols },
+                        () => Math.random() * -40,
+                    );
+                    speeds = Array.from(
+                        { length: cols },
+                        () => 0.5 + Math.random() * 1.1,
+                    );
+
+                    // Solid start so the first frames leave clean trails
+                    ctx.fillStyle = "#09090b";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                function step() {
+                    // Translucent fade leaves fading trails behind the heads
+                    ctx.fillStyle = "rgba(9, 9, 11, 0.1)";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = FONT + "px 'JetBrains Mono', monospace";
+
+                    for (let i = 0; i < rows.length; i++) {
+                        const x = i * FONT;
+                        const y = rows[i] * FONT;
+
+                        // Neon green head, classic Matrix style
+                        ctx.fillStyle = "rgba(0, 255, 70, 0.9)";
+                        ctx.fillText(
+                            GLYPHS[(Math.random() * GLYPHS.length) | 0],
+                            x,
+                            y,
+                        );
+
+                        // Occasional bright glow-green echo for neon feel
+                        if (Math.random() < 0.05) {
+                            ctx.fillStyle = "rgba(190, 255, 190, 0.6)";
+                            ctx.fillText(
+                                GLYPHS[(Math.random() * GLYPHS.length) | 0],
+                                x,
+                                y - FONT * 5,
                             );
-                            ctx.lineTo(
-                                particles[j].screenX,
-                                particles[j].screenY,
-                            );
-                            ctx.stroke();
+                        }
+
+                        rows[i] += speeds[i];
+
+                        if (y > canvas.height && Math.random() > 0.965) {
+                            rows[i] = Math.random() * -20;
                         }
                     }
                 }
-            }
 
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                particles.forEach((particle) => {
-                    particle.update();
-                    particle.draw();
-                });
-
-                connectParticles();
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-
-            // Handle window resize
-            window.addEventListener("resize", () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-
-            // Mouse interaction
-            canvas.addEventListener("mousemove", (e) => {
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-
-                particles.forEach((particle) => {
-                    const dx = mouseX - particle.screenX;
-                    const dy = mouseY - particle.screenY;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 100) {
-                        const force = (100 - distance) / 100;
-                        particle.x -= dx * force * 0.05;
-                        particle.y -= dy * force * 0.05;
+                function loop(t) {
+                    if (!running) {
+                        rafId = null;
+                        return;
                     }
-                });
-            });
-
-            // Confetti effect on logo click
-            const logo = document.querySelector(".logo");
-            const confettiColors = ["#711c91", "#ea00d9", "#0abdc6", "#133e7c"];
-
-            logo.addEventListener("click", (e) => {
-                const rect = logo.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-
-                // Create 50 confetti pieces
-                for (let i = 0; i < 50; i++) {
-                    createConfetti(centerX, centerY);
-                }
-            });
-
-            function createConfetti(x, y) {
-                const confetti = document.createElement("div");
-                confetti.className = "confetti";
-
-                // Random color from palette
-                const color =
-                    confettiColors[
-                        Math.floor(Math.random() * confettiColors.length)
-                    ];
-                confetti.style.backgroundColor = color;
-                confetti.style.boxShadow = `0 0 10px ${color}`;
-
-                // Random shape (square or circle)
-                if (Math.random() > 0.5) {
-                    confetti.style.borderRadius = "50%";
+                    if (t - last >= FRAME_MS) {
+                        step();
+                        last = t;
+                    }
+                    rafId = requestAnimationFrame(loop);
                 }
 
-                // Starting position
-                confetti.style.left = x + "px";
-                confetti.style.top = y + "px";
-
-                document.body.appendChild(confetti);
-
-                // Random velocity
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = 3 + Math.random() * 5;
-                const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity - 5; // Initial upward boost
-
-                let posX = x;
-                let posY = y;
-                let velocityX = vx;
-                let velocityY = vy;
-                let rotation = Math.random() * 360;
-                let opacity = 1;
-
-                function animateConfetti() {
-                    velocityY += 0.2; // Gravity
-                    posX += velocityX;
-                    posY += velocityY;
-                    rotation += 5;
-                    opacity -= 0.015;
-
-                    confetti.style.left = posX + "px";
-                    confetti.style.top = posY + "px";
-                    confetti.style.transform = `rotate(${rotation}deg)`;
-                    confetti.style.opacity = opacity;
-
-                    if (opacity > 0 && posY < window.innerHeight) {
-                        requestAnimationFrame(animateConfetti);
-                    } else {
-                        confetti.remove();
+                function start() {
+                    if (!running && rows.length) {
+                        running = true;
+                        last = 0;
+                        rafId = requestAnimationFrame(loop);
                     }
                 }
 
-                animateConfetti();
-            }
+                function stop() {
+                    running = false;
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                }
+
+                resize();
+                window.addEventListener("resize", resize);
+
+                new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                start();
+                            } else {
+                                stop();
+                            }
+                        });
+                    },
+                    { threshold: 0 },
+                ).observe(section);
+            })();
+
+            // Confetti burst on nav logo click — revived from the old
+            // neon design, using the same palette.
+            (function () {
+                const brand = document.querySelector(".nav-brand");
+                if (!brand) return;
+
+                const confettiColors = [
+                    "#711c91",
+                    "#ea00d9",
+                    "#0abdc6",
+                    "#133e7c",
+                ];
+
+                function createConfetti(x, y) {
+                    const confetti = document.createElement("div");
+                    confetti.className = "confetti";
+
+                    const color =
+                        confettiColors[
+                            Math.floor(Math.random() * confettiColors.length)
+                        ];
+                    confetti.style.backgroundColor = color;
+                    confetti.style.boxShadow = `0 0 10px ${color}`;
+
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = "50%";
+                    }
+
+                    confetti.style.left = x + "px";
+                    confetti.style.top = y + "px";
+                    document.body.appendChild(confetti);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 3 + Math.random() * 5;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity - 5;
+
+                    let posX = x;
+                    let posY = y;
+                    let velocityX = vx;
+                    let velocityY = vy;
+                    let rotation = Math.random() * 360;
+                    let opacity = 1;
+
+                    function animateConfetti() {
+                        velocityY += 0.2;
+                        posX += velocityX;
+                        posY += velocityY;
+                        rotation += 5;
+                        opacity -= 0.015;
+
+                        confetti.style.left = posX + "px";
+                        confetti.style.top = posY + "px";
+                        confetti.style.transform = `rotate(${rotation}deg)`;
+                        confetti.style.opacity = opacity;
+
+                        if (opacity > 0 && posY < window.innerHeight) {
+                            requestAnimationFrame(animateConfetti);
+                        } else {
+                            confetti.remove();
+                        }
+                    }
+
+                    animateConfetti();
+                }
+
+                brand.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const rect = brand.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+
+                    for (let i = 0; i < 50; i++) {
+                        createConfetti(centerX, centerY);
+                    }
+
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                });
+            })();
         </script>
     </body>
 </html>
